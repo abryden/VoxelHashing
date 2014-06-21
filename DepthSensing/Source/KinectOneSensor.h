@@ -5,7 +5,6 @@
 /****************************************************************************/
 
 #include "GlobalAppState.h"
-
 //Only working with Kinect 2.0 SDK (which wants to run on Win8)
 #ifdef KINECT_ONE
 

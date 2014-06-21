@@ -5,7 +5,7 @@
 /***************************************************************************/
 
 // Only works when Kinect 2.0 SDK is installed
-//#define KINECT_ONE
+#define KINECT_ONE
 
 // Only works when OpenNI 2 SDK is installed
 #define OPEN_NI
@@ -16,6 +16,9 @@
 #define SDF_BLOCK_SIZE 8
 #define RENDERMODE_INTEGRATE 0 
 #define RENDERMODE_VIEW 1
+
+#define EXCEPTION(s) MLIB_EXCEPTION(s)
+#define M_PI 3.141592653
 
 #include "DepthSensor.h"
 
