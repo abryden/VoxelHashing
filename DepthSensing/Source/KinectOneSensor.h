@@ -134,17 +134,27 @@ public:
 				hr = pDepthFrame->get_DepthMinReliableDistance(&nDepthMinReliableDistance);
 				hr = pDepthFrame->get_DepthMaxReliableDistance(&nDepthMaxReliableDistance);
 			
-				float centerX = nDepthWidth/2.0f;
-				float centerY = nDepthHeight/2.0f;
+				float centerX = 261.062f;//nDepthWidth/2.0f;
+				float centerY = 207.3631;//nDepthHeight/2.0f;
 
-				float focalLengthX = centerX/tan(fovX/2.0f*(float)M_PI/180.0f);
-				float focalLengthY = centerY/tan(fovY/2.0f*(float)M_PI/180.0f);
+				float focalLengthX = 366.7977f;//centerX/tan(fovX/2.0f*(float)M_PI/180.0f);
+				float focalLengthY = 366.7977f;//centerY/tan(fovY/2.0f*(float)M_PI/180.0f);
 
-				double k1 = 1.5355725262415776e-001;
+		/*		double k1 = 1.5355725262415776e-001;
 				double k2 = -3.3172043290283648e-001;
 				double p1 = -8.6523355025079577e-003;
 				double p2 = 1.3118055542282476e-002;
 				double k3 = 1.5561334862418680e-001;
+
+				*/
+
+				double k1 = 0.08457718;
+				double k2 = -0.2668942;
+				double p1 = 2.7424E-10;
+				double p2 = -6.033485E-10;
+				double k3 = 0.1012953;
+
+
 				initializeIntrinsics(focalLengthX, focalLengthY, centerX, centerY, k1, k2, k3, p1, p2);
 			}
 			SafeRelease(pDepthFrameDescription);

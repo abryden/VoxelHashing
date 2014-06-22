@@ -50,8 +50,8 @@ void DX11MarchingCubesHashSDF::saveMesh( const std::string& filename, const mat4
 
 	//s_meshData.removeDuplicateVertices();
 	//s_meshData.mergeCloseVertices(0.00001f);
-	s_meshData.mergeCloseVertices(0.00001f, true);
-	s_meshData.removeDuplicateFaces();
+	//s_meshData.mergeCloseVertices(0.00001f, true);
+	//s_meshData.removeDuplicateFaces();
 
 	if (transform) {
 		s_meshData.applyTransform(*transform);

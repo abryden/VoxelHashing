@@ -4,7 +4,7 @@
 //// 0 = Kinect, 1 = PrimeSense, 2 = SoftKinect, 3 = BinaryDumpOld, 4 = ImageReader, 5 = KinectOneSensor, 6 = Christoph Sensor, 7 = BinaryDumpReader
 //GlobalAppState::s_sensorIdx = 0;
 //#else
-s_sensorIdx = 1;
+s_sensorIdx = 5;
 //#endif
 s_ImageReaderSensorSourcePath = "../stanfordData/copyroom_png/";	//just for image reader sensor, where images are loaded
 s_ImageReaderSensorNumFrames = 0;									//dumps the data after n frames (for every reader)
@@ -36,7 +36,7 @@ s_bEnableGarbageCollection = true;
 s_hashNumBucketsLocal = 1000000;
 s_hashNumBucketsGlobal = 1337;		// Is not used in the current implementation
 //s_hashNumSDFBlocks = 0x1 << 18;	//17 on GTX 480; 18 on GTX TITAN (due to memory requirements)
-s_hashNumSDFBlocks = 262144;
+s_hashNumSDFBlocks = 131072;
 s_initialChunkListSize = 2000;
 s_hashStreamOutParts = 80;
 
