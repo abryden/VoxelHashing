@@ -435,8 +435,16 @@ template <class FloatType>
 void MeshIO<FloatType>::writeToPLY( const std::string& filename, const MeshData<FloatType>& mesh )
 {
 	if (!std::is_same<FloatType, float>::value) throw MLIB_EXCEPTION("only implemented for float not for double");
+	
+	std::ofstream file;
+	file.open(filename, std::ios::binary);
 
-	std::ofstream file(filename, std::ios::binary);
+	if (file.fail() == true) {
+		LPCWSTR dname = L"Scans\\";
+		CreateDirectory(dname, NULL);
+		file.open(filename, std::ios::binary);
+	}
+
 	if (!file.is_open()) throw MLIB_EXCEPTION("Could not open file for writing " + filename);
 	file << "ply\n";
 	file << "format binary_little_endian 1.0\n";
@@ -508,7 +516,16 @@ void MeshIO<FloatType>::writeToPLY( const std::string& filename, const MeshData<
 template <class FloatType>
 void MeshIO<FloatType>::writeToOFF( const std::string& filename, const MeshData<FloatType>& mesh )
 {
-	std::ofstream file(filename);
+	std::ofstream file;
+	file.open(filename, std::ios::binary);
+
+	if (file.fail() == true) {
+		LPCWSTR dname = L"Scans\\";
+		CreateDirectory(dname, NULL);
+		file.open(filename, std::ios::binary);
+	}
+
+
 	if (!file.is_open())	throw MLIB_EXCEPTION("Could not open file for writing " + filename);		
 
 	// first line should say 'COFF'
@@ -546,7 +563,15 @@ void MeshIO<FloatType>::writeToOFF( const std::string& filename, const MeshData<
 template <class FloatType>
 void MeshIO<FloatType>::writeToOBJ( const std::string& filename, const MeshData<FloatType>& mesh )
 {
-	std::ofstream file(filename);
+	std::ofstream file;
+	file.open(filename, std::ios::binary);
+
+	if (file.fail() == true) {
+		LPCWSTR dname = L"Scans\\";
+		CreateDirectory(dname, NULL);
+		file.open(filename, std::ios::binary);
+	}
+
 	if (!file.is_open())	throw MLIB_EXCEPTION("Could not open file for writing " + filename);
 
 	file << "####\n";
