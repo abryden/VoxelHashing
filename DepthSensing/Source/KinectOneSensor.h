@@ -43,6 +43,10 @@ public:
 		m_depthSpacePoints = new DepthSpacePoint[m_depthPointCount];
 		m_cameraSpacePoints = new CameraSpacePoint[m_depthPointCount];
 
+		m_pDepthRingBuffer = new UINT16[m_depthPointCount * 10];
+		m_depthRingBufferPos = 0;
+		m_totalFrames = 0;
+
 		for(unsigned int i = 0; i<cDepthWidth; i++)
 		{
 			for(unsigned int j = 0; j<cDepthHeight; j++)
@@ -134,11 +138,11 @@ public:
 				hr = pDepthFrame->get_DepthMinReliableDistance(&nDepthMinReliableDistance);
 				hr = pDepthFrame->get_DepthMaxReliableDistance(&nDepthMaxReliableDistance);
 			
-				float centerX = 261.062f;//nDepthWidth/2.0f;
-				float centerY = 207.3631;//nDepthHeight/2.0f;
+				float centerX = 254.0287f;//nDepthWidth/2.0f;
+				float centerY = 206.2986;//nDepthHeight/2.0f;
 
-				float focalLengthX = 366.7977f;//centerX/tan(fovX/2.0f*(float)M_PI/180.0f);
-				float focalLengthY = 366.7977f;//centerY/tan(fovY/2.0f*(float)M_PI/180.0f);
+				float focalLengthX = 366.7275f;//centerX/tan(fovX/2.0f*(float)M_PI/180.0f);
+				float focalLengthY = 366.7275f;//centerY/tan(fovY/2.0f*(float)M_PI/180.0f);
 
 		/*		double k1 = 1.5355725262415776e-001;
 				double k2 = -3.3172043290283648e-001;
@@ -148,10 +152,10 @@ public:
 
 				*/
 
-				double k1 = 0.08457718;
-				double k2 = -0.2668942;
-				double p1 = 2.7424E-10;
-				double p2 = -6.033485E-10;
+				double k1 = 0.09216522;
+				double k2 = -0.2742261;
+				double p1 = -5.148744E-08;
+				double p2 = 1.39854E-08;
 				double k3 = 0.1012953;
 
 
@@ -250,6 +254,9 @@ public:
 
 		if (SUCCEEDED(hr))
 		{
+			m_totalFrames++;
+			m_depthRingBufferPos = m_totalFrames % 10;
+			int currentRingBufferReadPos = (m_totalFrames + 10 - 2) % 10;
 			INT64 nDepthTime = 0;
 			IFrameDescription* pDepthFrameDescription = NULL;
 			
@@ -287,7 +294,18 @@ public:
 
 			if (SUCCEEDED(hr))
 			{	
+				
+				
+				
+				//use this if you want to try to match color and depth
+				//this is experimental
+				//memcpy(m_pDepthRingBuffer + m_depthPointCount*m_depthRingBufferPos, pDepthBuffer, m_depthPointCount * 2);
+				//const UINT16* const depthFrame = m_pDepthRingBuffer + m_depthPointCount*currentRingBufferReadPos;
+				
+
+				//otherwise use this
 				const UINT16* const depthFrame = pDepthBuffer;
+				
 				m_pCoordinateMapper->MapDepthFrameToColorSpace(m_depthPointCount, depthFrame, m_depthPointCount, m_pColorCoordinates);
 					
 				// Make sure we've received valid data
@@ -364,6 +382,9 @@ private:
 	unsigned int m_depthPointCount;
 	DepthSpacePoint* m_depthSpacePoints;
 	CameraSpacePoint* m_cameraSpacePoints;
+	UINT16* m_pDepthRingBuffer;
+	int m_depthRingBufferPos;
+	int m_totalFrames;
 };
 
 #endif
